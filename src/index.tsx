@@ -47,9 +47,17 @@ const Main = () => {
 
   const animatedPosition = useSharedValue(0);
   const animatedValue = useSharedValue(height);
-  const scaleValue = Platform.OS === "android" ? 0.915 : 0.855;
+  const scaleValue = useMemo(
+    () => (Platform.OS === "android" ? 0.91 : 0.855),
+    []
+  );
+
   const animStyle = useAnimatedStyle(() => {
     return {
+      borderRadius:
+        Platform.OS === "ios"
+          ? interpolate(animatedValue.value, [height / 1.5, top], [40, 10])
+          : interpolate(animatedValue.value, [height / 1.5, top], [0, 10]),
       transform: [
         // {
         //   translateY: interpolate(animatedValue.value, [height, 50], [0, 30]),
@@ -123,7 +131,7 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     backgroundColor: "white",
-    borderRadius: 6,
+    borderRadius: 10,
   },
   contentContainer: {
     flex: 1,

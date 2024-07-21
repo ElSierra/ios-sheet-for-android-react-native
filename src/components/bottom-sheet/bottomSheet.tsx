@@ -80,8 +80,10 @@ export const CustomBottomSheet: React.FC<CustomBottomSheetProps> = ({
     <BottomSheetModal
       animationConfigs={{
         overshootClamping: true,
-
-        mass: 1,
+        clamp: {
+          min: 100,
+          max: 400,
+        },
       }}
       ref={bottomSheetModalRef}
       index={1}
@@ -105,7 +107,7 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     backgroundColor: "white",
-    borderRadius: 6,
+    borderRadius: 10,
   },
   contentContainer: {
     flex: 1,
