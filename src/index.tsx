@@ -27,10 +27,14 @@ import { StatusBar } from "expo-status-bar";
 import CustomBackground from "./components/bottom-sheet/CustomBg";
 import { CustomBottomSheet } from "./components/bottom-sheet/bottomSheet";
 import { Home } from "./screen/Home";
-
+import { getCornerRadius } from "../modules/radius";
+console.log("🚀 ~ file: App.tsx:7 ~ hello:", getCornerRadius());
 const Main = () => {
   // ref
   const { top } = useSafeAreaInsets();
+  const CORNER_RADIUS = getCornerRadius() === 0 ?20 : getCornerRadius();
+  console.log("🚀 ~ file: index.tsx:36 ~ Main ~ CORNER_RADIUS:", CORNER_RADIUS);
+
   console.log("🚀 ~ file: index.tsx:30 ~ Main ~ top:", top);
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
@@ -54,10 +58,22 @@ const Main = () => {
 
   const animStyle = useAnimatedStyle(() => {
     return {
-      borderRadius:
+      borderTopLeftRadius:
         Platform.OS === "ios"
           ? interpolate(animatedValue.value, [height / 1.5, top], [40, 10])
-          : interpolate(animatedValue.value, [height / 1.5, top], [0, 10]),
+          : interpolate(
+              animatedValue.value,
+              [height / 1.5, top],
+              [CORNER_RADIUS / 2.5, 10]
+            ),
+      borderTopRightRadius:
+        Platform.OS === "ios"
+          ? interpolate(animatedValue.value, [height / 1.5, top], [40, 10])
+          : interpolate(
+              animatedValue.value,
+              [height / 1.5, top],
+              [CORNER_RADIUS / 2.5, 10]
+            ),
       transform: [
         // {
         //   translateY: interpolate(animatedValue.value, [height, 50], [0, 30]),
